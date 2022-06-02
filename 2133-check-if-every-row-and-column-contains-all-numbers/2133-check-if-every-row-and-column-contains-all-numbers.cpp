@@ -3,14 +3,18 @@ public:
     bool checkValid(vector<vector<int>>& matrix) {
         int n= matrix.size();
         for(int i=0;i<n;i++){
-            unordered_set<int> rowS;
-            unordered_set<int> colS;
+            vector<bool> rowS(n+1,false);
+            vector<bool> colS(n+1,false);
             for(int j=0;j<n;j++){
-                rowS.insert(matrix[i][j]);
-                colS.insert(matrix[j][i]);
+                if(rowS[matrix[i][j]])
+                    return false;
+                else
+                    rowS[matrix[i][j]] =true;
+                if(colS[matrix[j][i]])
+                    return false;
+                else
+                    colS[matrix[j][i]] =true;
             }
-            if(rowS.size()!=n||colS.size()!=n)
-                return false;
         }
         return true;
     }
