@@ -23,12 +23,14 @@ class Solution {
     }
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
-        if(nums.empty())
+        int first,last;
+        if(find(nums.begin(),nums.end(),target)==nums.end())
             return {-1,-1};
-        int m = binarySearchSmaller(nums,target,nums.size(),0,nums.size()-1,false);
-        int x = binarySearchSmaller(nums,target,-1,0,nums.size()-1,true);
-        if(m==nums.size())
-            m=-1;
-        return {m,x};
+        else
+        {
+            first=lower_bound(nums.begin(),nums.end(),target)-nums.begin();
+            last=upper_bound(nums.begin(),nums.end(),target)-nums.begin()-1;
+        }
+        return {first,last};
     }
 };
