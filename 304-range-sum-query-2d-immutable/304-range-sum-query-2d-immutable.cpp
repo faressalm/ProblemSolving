@@ -8,13 +8,7 @@ public:
         // row sum
         for(int i=1;i<=rows;i++){
             for(int j=1;j<=cols;j++){
-                matrix[i][j] = matrix[i][j-1]+m[i-1][j-1];
-            }
-        }
-        // col sum
-        for(int i=1;i<=cols;i++){
-            for(int j=1;j<=rows;j++){
-                matrix[j][i] += matrix[j-1][i];
+                matrix[i][j] = matrix[i][j-1]+matrix[i-1][j]+m[i-1][j-1]-matrix[i-1][j-1];
             }
         }
         this->matrix =matrix;
