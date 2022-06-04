@@ -8,7 +8,7 @@ class Solution {
         }
         return true;
     }
-    void backTracing(int n, vector<int> cols){
+    void backTracing(int n, vector<int>& cols){
         int nextCol = cols.size();
         if(nextCol==n)
             queens.push_back(cols);
@@ -22,7 +22,8 @@ class Solution {
     }
 public:
     vector<vector<string>> solveNQueens(int n) {
-        backTracing(n,vector<int>(0));
+        vector<int> cols;
+        backTracing(n,cols);
         vector<vector<string>> sol; 
         for(auto q:queens){
             vector<string> v(n,string (n,'.'));
