@@ -1,34 +1,30 @@
+
 class Solution {
-	public: int totalNQueens(int n) {
-        return backtrack(0, 0, 0, 0, n);
-    }
-    
-    private: int backtrack(int row, int cols, int diags, int antiDiags, int N) {
-		// If we're at row N, we've finished placing all N queens. Therefore, we've reached a new valid position.
-        if (row == N) return 1;
-        
-        int total = 0;
-        for (int col=0; col<N; col++) {
-            int diag = row - col + N;
-            int antiDiag = row + col;
-            
-			// Check if it's possible to place a Queen at this point
-            if ((cols & (1 << col)) != 0 || (diags & (1 << diag)) != 0 || (antiDiags & (1 << antiDiag)) != 0) continue;
-            
-			// If so, apply changes to the columns and diagonals
-            cols |= 1 << col;
-            diags |= 1 << diag;
-            antiDiags |= 1 << antiDiag;
-            
-			// Continue to the next row
-            total += backtrack(row + 1, cols, diags, antiDiags, N);
-            
-			// Undo changes and try another position
-            cols ^= 1 << col;
-            diags ^= 1 << diag;
-            antiDiags ^= 1 << antiDiag;
+    private:int queens =0;
+    bool checkValid(int n,int row,vector<int> cols){
+        int size= cols.size();
+        for(int i=size-1;i>=0;i--){
+            if(cols[i]==row||cols[i]==row-(size-i)||cols[i]==row+(size-i))
+                return false;
         }
-        
-        return total;
+        return true;
+    }
+    void backTracing(int n, vector<int>& cols){
+        int nextCol = cols.size();
+        if(nextCol==n)
+            queens++;
+        for(int i=0;i<n;i++){
+            if(checkValid(n,i,cols)){
+                cols.push_back(i);
+                backTracing(n,cols);
+                cols.pop_back();    
+            }
+        }
+    }
+public:
+   int totalNQueens(int n) {
+        vector<int> cols;
+        backTracing(n,cols);
+        return queens;
     }
 };
