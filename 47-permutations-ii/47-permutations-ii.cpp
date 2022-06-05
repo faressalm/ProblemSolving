@@ -3,25 +3,22 @@ class Solution {
     vector < vector < int >> sol;
   void temp(vector < int > & nums, int it) {
     if (it == nums.size() - 1) {
-    if(find(sol.begin(), sol.end(), nums) != sol.end()){
-                return;
-            }
       sol.push_back(nums);
       return;
     }
-    int brev = -90;
+    unordered_set<int> s;
     for (int i = it; i < nums.size(); i++) {
-      if (it == i || brev != nums[i]) {
+      if (s.find(nums[i])==s.end()) {
         swap(nums[it], nums[i]);
         temp(nums, it + 1);
         swap(nums[it], nums[i]);
-      }
-        brev = nums[i];
+        s.insert(nums[i]);
+      }    
     }
   }
   public:
     vector < vector < int >> permuteUnique(vector < int > & nums) {
-      sort(nums.begin(), nums.end());
+      // sort(nums.begin(), nums.end());
       temp(nums, 0);
       return sol;
     }
