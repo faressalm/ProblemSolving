@@ -9,14 +9,19 @@ class Solution {
       sol.push_back(nums);
       return;
     }
+    int brev = -90;
     for (int i = it; i < nums.size(); i++) {
+      if (it == i || brev != nums[i]) {
         swap(nums[it], nums[i]);
         temp(nums, it + 1);
         swap(nums[it], nums[i]);
+      }
+        brev = nums[i];
     }
   }
   public:
     vector < vector < int >> permuteUnique(vector < int > & nums) {
+      sort(nums.begin(), nums.end());
       temp(nums, 0);
       return sol;
     }
