@@ -9,26 +9,44 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        unordered_set<ListNode *> s;
-        while(headA!=NULL&&headB!=NULL)
-        {   if(s.find(headA)==s.end())
-               s.insert(headA);
-            else
-                return headA;
-            if(s.find(headB)==s.end())
-               s.insert(headB);
-            else
-                return headB;
-            headA= headA->next;
-            headB=headB->next;
+        ListNode * a= headA;
+        ListNode * b =headB;
+        int aSize=0;
+        int bSize=0;
+        while(a!=NULL){
+            a=a->next;
+            aSize++;    
         }
-        if(headB!=NULL)
-        {while(headB!=NULL&&s.find(headB)==s.end())
-             headB=headB->next;
-        return headB;
+        while(b!=NULL){
+            b=b->next;
+            bSize++;    
         }
-        while(headA!=NULL&&s.find(headA)==s.end())
-            headA=headA->next;
-        return  headA;
+        if(aSize>bSize){
+            int diff =  aSize-bSize;
+            while(diff!=0){
+                headA=headA->next;
+                diff--;
+            }
+            while(bSize!=0){
+                if(headA==headB)
+                    return headA;
+                headA=headA->next;
+                headB=headB->next;
+            }
+        }else{
+            int diff = -aSize+bSize;
+            while(diff!=0){
+                headB=headB->next;
+                diff--;
+            }
+            while(aSize!=0){
+                if(headA==headB)
+                    return headA;
+                headA=headA->next;
+                headB=headB->next;
+            }            
+        }
+
+        return  NULL;
     }
 };
