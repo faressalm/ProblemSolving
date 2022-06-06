@@ -10,6 +10,7 @@ class Solution {
 public:
 ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         ListNode *ptr1 = headA, *ptr2 = headB; //pointers on each head.
+        // eleminate largeSize - smallSize form large list then compare
         while(ptr1 != ptr2){
             if(ptr1)
                 ptr1 = ptr1->next;
