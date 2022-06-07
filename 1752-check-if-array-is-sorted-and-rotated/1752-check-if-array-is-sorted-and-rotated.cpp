@@ -1,16 +1,15 @@
 class Solution {
   public:
     bool check(vector<int> & nums) {
-      int count = 0;
+      bool flipped =false;
       int n = nums.size();
       for (int i = 0; i < n; i++) {
         if (nums[i] > nums[(i + 1) % n]) {
-          count = count + 1;
+         if(flipped)
+             return false;
+          else flipped =true;  
         }
       }
-      if (count <= 1) {
         return true;
-      } else
-        return false;
     }
 };
