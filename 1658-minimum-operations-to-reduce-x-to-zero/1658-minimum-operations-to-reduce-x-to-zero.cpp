@@ -1,6 +1,7 @@
 class Solution {
 public:
     int minOperations(vector<int>& nums, int x) {
+        // Sliding window +  gridy
         if(nums.size()==1)
             if(nums[0]==x)
                 return 1;
