@@ -5,11 +5,8 @@ private: int temp(string word,unordered_map<string,int>& dic){
     if(dic[word]!=-1)
         return dic[word];
     int len = dic[word];
-    for(int i=0;i<word.size();i++){
-        string x = word;
-        x.erase(i, 1);
-        len =  max(len,1+temp(x,dic));
-    }
+    for(int i=0;i<word.size();i++)
+        len =  max(len,1+temp(word.substr(0,i)+word.substr(i+1),dic));
     dic[word] = len;
     return len;
 }
