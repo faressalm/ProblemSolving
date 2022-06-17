@@ -12,7 +12,7 @@
 class Solution {
 private: pair<bool,bool> temp(TreeNode* root, int & count){
     if(root->right==NULL&&root->left==NULL)
-        return {false,false};
+        return {false,false}; // first ->  is monitered ,  second -> has camera 
     pair<bool,bool> nodeP = {false,false};
     if(root->left!=NULL)
     {
