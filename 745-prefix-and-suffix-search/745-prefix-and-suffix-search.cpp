@@ -1,76 +1,84 @@
 class WordFilter {
-private: vector<pair<vector<bool>,unordered_map<string,int>>> trie;
-// vector<int> -> next letters . unordered_map -> words index ends with this letter     
+private: 
+    struct TrieNode
+    {
+        struct TrieNode *children[26];
+        int wordIndex;
+    };
+    // Returns new trie node (initialized to NULLs)
+    struct TrieNode *getNode(void)
+    {
+        struct TrieNode *pNode =  new TrieNode;
+        pNode->wordIndex = -1;
+        for (int i = 0; i < 26; i++)
+            pNode->children[i] = NULL;
+        return pNode;
+    }
+    void insert(struct TrieNode *root, string key,int wordIndex)
+    {
+        struct TrieNode *pCrawl = root;
+
+        for (int i = 0; i < key.length(); i++)
+        {
+            int index = key[i] - 'a';
+            if (!pCrawl->children[index])
+                pCrawl->children[index] = getNode();
+            pCrawl = pCrawl->children[index];
+        }
+        pCrawl->wordIndex = wordIndex;
+    }    
+    struct TrieNode *trie;
 public:
     WordFilter(vector<string>& words) {
-        vector<pair<vector<bool>,unordered_map<string,int>>> 
-            trie(27,{vector<bool>(27,false),unordered_map<string,int>()});
-        for(int index = 0 ;index<words.size();index++){
-            int prev = 0;
-            for(int j=0;j<words[index].size();j++){
-                int charIndex = words[index][j] -'a'+1;
-                trie[prev].first[charIndex] = true;
-                prev = charIndex;
-            }
-            trie[prev].second[words[index]] = index;
-        }
-        this->trie = trie;
+        struct TrieNode *root = getNode();
+        vector<vector<string>> sol;
+        for (int i = 0; i < words.size(); i++)
+             insert(root, words[i],i);
+        this->trie =root;
     }
     
-    int searchSuffix(vector<char>& word,string suffix,int prev){
-        if(word.size()+suffix.size()>10)
+    int searchSuffix(string suffix,struct TrieNode *root){
+        if(!root)
             return -1;
-        int suffInd = suffix[0]-'a'+1;
+        struct TrieNode *pCrawl = root;
+        int suffInd = suffix[0]-'a';
         int position = -1;
-        for(int i=1;i<=26;i++){
-            if(trie[prev].first[i])
-            {   word.push_back((char)(i-1+'a'));
-                position = max(position,searchSuffix(word,suffix,i));
+        for(int i=0;i<26;i++){
+            if(pCrawl->children[i] != NULL)
+            {  
+                position = max(position,searchSuffix(suffix,pCrawl->children[i]));
                 if(i==suffInd){
-                position = max(getIndex(word,suffix),position);
+                position = max(getIndex(suffix,pCrawl->children[i]),position);
                 }
-                word.pop_back();
             }
         }
         return position;
     }
-    int getIndex(vector<char> word,string suffix){
-       if(word.size()+suffix.size()>11)
-            return -1; 
-       int prev = suffix[0]-'a'+1; 
+    int getIndex(string suffix,struct TrieNode *root){
+       if(!root)
+            return -1;
+       struct TrieNode *pCrawl = root;        
        for(int i=1;i<suffix.size();i++){
-            int charIndex = suffix[i] -'a'+1;
-            if(!trie[prev].first[charIndex])
-                 return -1;
-            prev = charIndex;
-            word.push_back(suffix[i]);
+            int index = suffix[i] - 'a';
+            if (!pCrawl->children[index])
+                return -1;
+            pCrawl = pCrawl->children[index];
         }
-       string c(word.begin(),word.end());
-       if(trie[prev].second.find(c) != trie[prev].second.end()){
-           return trie[prev].second[c];
-       } 
-        return -1;
+        return pCrawl->wordIndex;
     }
     int f(string prefix, string suffix) {
-        int prev=0;
-        vector<char> word;
         int position =-1;
-        for(int i=0;i<prefix.size();i++){
-            int charIndex = prefix[i] -'a'+1;
-            if(!trie[prev].first[charIndex])
-                 return -1;
-            prev = charIndex;
-            word.push_back(prefix[i]);
+        struct TrieNode *pCrawl = trie;
+        for (int i = 0; i < prefix.length(); i++)
+        {
+            int index = prefix[i] - 'a';
+            if (!pCrawl->children[index])
+                return -1;
+            pCrawl = pCrawl->children[index];
             if(prefix.substr(i) == suffix.substr(0,prefix.size()-i)){
-                position = max(position,getIndex(word,suffix));
+                position = max(position,getIndex(suffix,pCrawl));
             }
         }
-        return max(position,searchSuffix(word,suffix,prev));
+        return max(position,searchSuffix(suffix,pCrawl));
     }
 };
-
-/**
- * Your WordFilter object will be instantiated and called as such:
- * WordFilter* obj = new WordFilter(words);
- * int param_1 = obj->f(prefix,suffix);
- */
