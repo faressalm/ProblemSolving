@@ -52,20 +52,30 @@ void getThreeMin(vector<string>& v,struct TrieNode *root,vector<char> word){
     }
 }    
 public:
-    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
-        struct TrieNode *root = getNode();
+    // vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
+    //     struct TrieNode *root = getNode();
+    //     vector<vector<string>> sol;
+    //     for (int i = 0; i < products.size(); i++)
+    //          insert(root, products[i]);
+    //     vector<char> word;
+    //     for(int  i =0;i<searchWord.size();i++){
+    //         root = search(root,searchWord[i]);
+    //         vector<string> v;
+    //         word.push_back(searchWord[i]);
+    //         getThreeMin(v,root,word);
+    //         sol.push_back(v);
+    //     }
+    //     return sol;
+    // } 
+     vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
         vector<vector<string>> sol;
-        for (int i = 0; i < products.size(); i++)
-             insert(root, products[i]);
-        vector<char> word;
+        sort(products.begin(), products.end());
+        int left = 0, right = products.size() - 1;
         for(int  i =0;i<searchWord.size();i++){
-            root = search(root,searchWord[i]);
-            vector<string> v;
-            word.push_back(searchWord[i]);
-            getThreeMin(v,root,word);
-            sol.push_back(v);
-        }
+            while (left <= right && (products[left].length() == i || products[left][i] < searchWord[i])) left++;
+            while (left <= right && (products[right].length() == i || products[right][i] > searchWord[i])) right--;                                       sol.push_back(vector<string> (products.begin()+left,products.begin()+left+min(3,right-left+1)));
+        }         
         return sol;
-    } 
+    }
 
 };
