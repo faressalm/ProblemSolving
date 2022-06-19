@@ -67,13 +67,50 @@ public:
     //     }
     //     return sol;
     // } 
+    int getLow(char c, vector<string>& products,int index,int low,int high){ 
+        int startIndex = -1;
+        while(low<=high){
+            int mid = low+ (high-low)*0.5;
+            if(products[mid][index]==c){
+                startIndex = mid;
+                high = mid-1;
+            }
+            else if(products[mid].size()>index&&products[mid][index]>c)
+                high = mid-1;
+            else 
+                low = mid+1;
+        }
+        return startIndex;
+    }
+    int getHigh(char c, vector<string>& products,int index,int low,int high){
+        int endIndex = -1;
+        while(low<=high){
+            int mid = low+ (high-low)*0.5;
+            if(products[mid][index]==c){
+                endIndex = mid;
+                low = mid+1;
+            }
+            else if(products[mid].size()>index&&products[mid][index]>c)
+                high = mid-1;
+            else 
+                low = mid+1;
+        }
+        return endIndex;
+    }
      vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
         vector<vector<string>> sol;
         sort(products.begin(), products.end());
         int left = 0, right = products.size() - 1;
         for(int  i =0;i<searchWord.size();i++){
-            while (left <= right && (products[left].length() == i || products[left][i] < searchWord[i])) left++;
-            while (left <= right && (products[right].length() == i || products[right][i] > searchWord[i])) right--;                                       sol.push_back(vector<string> (products.begin()+left,products.begin()+left+min(3,right-left+1)));
+            if(left!=-1){
+                int nLeft = getLow(searchWord[i],products,i,left,right);
+                int nRight = getHigh(searchWord[i],products,i,left,right);
+                left = nLeft;
+                right= nRight;                
+            }
+            if(left!=-1)
+              sol.push_back(vector<string> (products.begin()+left,products.begin()+left+min(3,right-left+1)));
+            else sol.push_back({});
         }         
         return sol;
     }
