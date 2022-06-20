@@ -43,15 +43,6 @@ private:
                 return true;
         return false;
     }
-    int search(struct TrieNode *root,int wordSize){
-         if(root->isEndOfWord)
-             return 1+wordSize;
-        int sum =0;
-         for(int i=0;i<26;i++)
-            if (root->children[i])
-                sum+= search(root->children[i],wordSize+1);
-        return sum;
-    }
 public:
     int minimumLengthEncoding(vector<string>& words) {
         struct TrieNode *root = getNode();
