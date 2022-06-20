@@ -15,8 +15,8 @@ private:
             pNode->children[i] = NULL;
         return pNode;
     }
-    void insert(struct TrieNode *root, string key)
-    {
+    int insert(struct TrieNode *root, string key)
+    {   int sum =0;
         struct TrieNode *pCrawl = root;
 
         for (int i = key.size()-1; i >= 0; i--)
@@ -25,11 +25,17 @@ private:
             if (!pCrawl->children[index])
                 pCrawl->children[index] = getNode();
             pCrawl = pCrawl->children[index];
-            pCrawl->isEndOfWord =false;
+            if(pCrawl->isEndOfWord){
+                pCrawl->isEndOfWord =false;  
+                sum-=(key.size()-i+1);
+            }
         }
         // mark last node as leaf
-        if(!hasChild(pCrawl))
+        if(!hasChild(pCrawl)){
             pCrawl->isEndOfWord = true;
+            sum+=(1+key.size());
+        }
+        return sum;
     } 
     bool hasChild(struct TrieNode *root){
         for(int i=0;i<26;i++)
@@ -49,8 +55,9 @@ private:
 public:
     int minimumLengthEncoding(vector<string>& words) {
         struct TrieNode *root = getNode();
+        int sum=0;
         for (int i = 0; i < words.size(); i++)
-             insert(root, words[i]);
-        return search(root,0);
+             sum+=insert(root, words[i]);
+        return sum;
     }
 };
