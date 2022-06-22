@@ -1,6 +1,7 @@
 class Solution {
 private:
 int partion (int start,int end,int k,vector<int>& nums){
+    swap(nums[start],nums[start+ (rand() % (end-start+1))]);
     int index= start;
      for(int i=start+1;i<=end;i++){
          if(nums[i]<=nums[start])
