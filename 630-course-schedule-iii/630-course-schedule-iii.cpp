@@ -11,19 +11,15 @@ public:
         priority_queue<int> shcedule;
         int time = 0;
         for(auto course: courses){
-            if(course[0]>course[1])
-                continue;
-            int p = shcedule.empty()?INT_MIN:shcedule.top();
             if(course[1]>=time+course[0])
             {
                 shcedule.push({course[0]});
                 time+=course[0];
-            }else if(p>course[0])
+            }else if(!shcedule.empty()&&shcedule.top()>course[0])
             {   
-                time -= p;
+                time += -shcedule.top() +course[0];
                 shcedule.pop();
                 shcedule.push({course[0]});
-                time+=course[0];
             }
         }
 
