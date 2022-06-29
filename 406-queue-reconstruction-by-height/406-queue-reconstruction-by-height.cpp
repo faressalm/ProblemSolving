@@ -2,6 +2,7 @@ class Solution {
 public:
     vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
         sort(people.begin(), people.end(), [](const vector < int > & i1,
+        // sort them asc by height
         const vector < int > & i2) {
               if(i1[0]==i2[0])
                   return i1[1]>i2[1];
@@ -29,7 +30,6 @@ public:
                 }
                 index=j-1;
             }
-            cout<<people[i][0]<<","<<people[i][1]<<" : "<< index<<endl;
             sol[index] = people[i];
             k= people[i][1];
         }
