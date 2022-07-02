@@ -9,7 +9,6 @@ public:
             maxHorizontal = max(maxHorizontal,horizontalCuts[i+1]-horizontalCuts[i]);
         for(int i=0;i<verticalCuts.size()-1;i++)
             maxVertical = max(maxVertical,verticalCuts[i+1]-verticalCuts[i]); 
-        long sol = long(maxVertical)*maxHorizontal%(int(1e9+7));
-        return int(sol);
+        return (1LL*maxVertical*maxHorizontal)%int(1e9+7);
     }
 };
