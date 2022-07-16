@@ -17,11 +17,11 @@ public:
         if(maxMove==0)
             return 0;
         vector<vector<vector<int>>> grid (m,vector<vector<int>>(n,vector<int>(maxMove+1,0)));
-            for(int i = 0;i<m;i++){
-                for(int j= 0;j<n;j++){
-                    grid[i][j][1] = getBoarderCount(m,n,i,j);
-                }
-            }   
+        for(int i = 0;i<m;i++){
+            for(int j= 0;j<n;j++){
+                grid[i][j][1] = getBoarderCount(m,n,i,j);
+            }
+        }   
         int out = grid[startRow][startColumn][1];
         for(int k = 2;k<=maxMove;k++){
             for(int i = 0;i<m;i++){
