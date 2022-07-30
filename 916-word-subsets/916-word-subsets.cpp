@@ -5,10 +5,10 @@ public:
         vector<string> sol;
         for(auto word:words2){
             unordered_map<char,int> temp;
-            for(auto &c:word)
+            for(auto &c:word){
                 temp[c]++;
-            for(auto & m:temp)
-                subset[m.first] = max(subset[m.first],m.second);
+                subset[c] = max(subset[c],temp[c]);   
+            }
         }
         bool take;
         for(auto word:words1){
