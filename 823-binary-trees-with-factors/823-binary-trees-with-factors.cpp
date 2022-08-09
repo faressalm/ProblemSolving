@@ -1,4 +1,5 @@
 class Solution {
+    // better than sqrt check previous elements only
 public:
     int numFactoredBinaryTrees(vector<int>& arr) {
         unordered_map<int,long> tree;
