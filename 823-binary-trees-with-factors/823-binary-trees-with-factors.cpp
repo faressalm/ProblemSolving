@@ -8,14 +8,15 @@ public:
             tree[num]=1;
         sort(arr.begin(),arr.end());
         int sum=0;
-        for(auto &num:arr){
-            for(int i=2;i<=sqrt(num);i++){
-                if(num%i==0)
+        for(int num=0;num<arr.size();num++){
+            for(int i=0;i<num;i++){
+                if(arr[num]%arr[i]==0)
                 {
-                    tree[num]=(tree[num]+((tree[i]*tree[num/i])%mode)*(i==num/i?1:2))%mode;
+                    tree[arr[num]]=
+                        (tree[arr[num]]+(tree[arr[i]]*tree[arr[num]/arr[i]])%mode) %mode;
                 }
             }
-            sum=(sum+tree[num])%mode;
+            sum=(sum+tree[arr[num]])%mode;
         }
         return sum;
     }
