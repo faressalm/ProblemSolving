@@ -1,5 +1,5 @@
 class Solution {
-        private:  map<string,int> initDic(){
+        private:  unordered_map<string,int> initDic(){
         return {
             {"I",1},
             {"IV",4},
@@ -18,7 +18,7 @@ class Solution {
     }
 public:
     int romanToInt(string s) {
-         map<string,int> dic =  initDic();
+         unordered_map<string,int> dic =  initDic();
         int sol=0;
         for(int i=0;i<s.size();i++){
             string roman = "";
