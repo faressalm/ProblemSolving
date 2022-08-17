@@ -4,9 +4,9 @@ public:
         vector<string> alph = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
         unordered_set<string> s;
         string morse="";
-        for(auto word:words){
+        for(auto &word:words){
             morse="";
-            for(auto letter:word){
+            for(auto &letter:word){
                 morse+=alph[letter-'a'];
             }
             s.insert(morse);
