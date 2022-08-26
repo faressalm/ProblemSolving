@@ -1,6 +1,6 @@
 class Solution {
-private: unordered_map<int,int> getFreq(int n){
-    unordered_map<int,int> freq;
+private: vector<int> getFreq(int n){
+    vector<int> freq(10,0);
     while(n!=0){
         freq[n%10]++;
         n/=10;
@@ -16,21 +16,13 @@ public:
             twos[int(log10(power))].push_back(power);            
         }
         int index = log10(n);
-        unordered_map<int,int> numFreq  =  getFreq(n);
-        unordered_map<int,int> freq;
-        bool found =true;
+        vector<int> numFreq  =  getFreq(n);
+        vector<int>  freq;
+        bool found =false;
         for(auto num: twos[index]){
             freq = getFreq(num);
-            found =true;
-            for(auto &f:numFreq){
-                if(freq[f.first]!=f.second)
-                {
-                    found =false;
-                    break;
-                }
-            }
-            if(found)
-                return found;
+            if(equal(freq.begin(),freq.end(),numFreq.begin()))
+                return true;
         }
         return false;
 
