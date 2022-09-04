@@ -16,7 +16,6 @@ private:
         int row = node.second.first;
         int col = node.second.second;
         int val = node.first->val;
-        cout<<val<<" "<<row<< " "<< col<<endl;
         if(col>=int(postive.size())) // push new vec
         {
             postive.push_back({{row,val}}); 
