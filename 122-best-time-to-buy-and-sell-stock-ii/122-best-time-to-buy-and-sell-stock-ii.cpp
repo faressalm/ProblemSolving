@@ -10,8 +10,9 @@ public:
                 maxP = i;
             }else{
                 dp[i] = prices[maxP] - prices[i]+dp[maxP];
-                dp[i] = max(dp[i],prices[i+1]-prices[i]+dp[i+1]);
-                dp[i] = max(dp[i],dp[i+1]);
+                if(prices[i+1]-prices[i]>0)
+                    dp[i] = max(dp[i],prices[i+1]-prices[i]+dp[i+1]);
+                else dp[i] = max(dp[i],dp[i+1]);
             }
         }
 
