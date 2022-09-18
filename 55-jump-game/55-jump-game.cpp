@@ -5,7 +5,8 @@ public:
         vector<int> dp(n+1,INT_MAX);
         dp[n-1]=0;
         for(int i =n-2;i>=0;i--){
-            for(int j=i+1;j<min(n,i+nums[i]+1);j++)
+            int l =min(n,i+nums[i]+1);
+            for(int j=i+1;j<l;j++)
                 if(dp[j]!=INT_MAX)    
                     {dp[i]= dp[j]+1;
                     break;}
