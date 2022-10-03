@@ -1,24 +1,21 @@
 class Solution {
 private: 
     vector<vector<int>> sol;
-    void temp(int start,int n,int k,unordered_set<int> &set){
+    void temp(int start,int n,int k,vector<int> &set){
         if(set.size()==k)
         {
-            sol.push_back(vector<int>(0));
-            sol[sol.size()-1].insert(sol[sol.size()-1].end(), set.begin(), set.end());
+            sol.push_back(set);
         }
         for(int i=start;i<=n;i++)
         {
-            if(set.find(i) == set.end()){
-                set.insert(i);
+                set.push_back(i);
                 temp(i+1,n,k,set);
-                set.erase(set.find(i));
-            }
+                set.pop_back();
         }
     }
 public:
     vector<vector<int>> combine(int n, int k) {
-        unordered_set<int> set;
+        vector<int> set;
         temp(1,n,k,set);
         return sol;
     }
