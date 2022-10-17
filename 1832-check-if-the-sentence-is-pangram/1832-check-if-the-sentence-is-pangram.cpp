@@ -3,12 +3,9 @@ public:
     bool checkIfPangram(string sentence) {
         if(sentence.size()<26)
             return false;
-        vector<bool> letters(26,false);
+        int letters =0;
         for(auto &c:sentence)
-            letters[c-'a'] =true;
-        bool sol=true;
-        for(auto b:letters)
-            sol=sol&&b;
-        return sol;
+            letters |= 1<< (c-'a');
+        return letters == ((1<<26) -1);
     }
 };
