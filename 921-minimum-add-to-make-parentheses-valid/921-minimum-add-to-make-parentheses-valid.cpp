@@ -2,15 +2,17 @@ class Solution {
 public:
     int minAddToMakeValid(string s) {
         int count = 0;
-        stack<char> letter;
+        int left = 0;
         for(auto &c:s)
-            if(c=='(')
-                letter.push(c);
-            else
-                if(letter.empty())
-                    count++;
-                else
-                    letter.pop();
-        return count + letter.size();
+        {
+            left += c == '('? 1:-1;
+            if(left == -1)
+            {
+                count++;
+                left = 0;
+            }
+        }
+        
+        return count + left;
     }
 };
