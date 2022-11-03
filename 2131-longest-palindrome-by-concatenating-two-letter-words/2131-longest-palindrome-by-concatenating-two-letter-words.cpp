@@ -11,9 +11,9 @@ public:
             if(m.find(rev)!=m.end()&&m[rev]!=0)
             {
                 longestLen+=4;
-                m[rev]++;
+                m[rev]--;
             }else{
-                m[word]--;
+                m[word]++;
             }
         }
         for(auto &word:singles)
