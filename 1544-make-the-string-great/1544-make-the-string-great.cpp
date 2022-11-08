@@ -1,21 +1,20 @@
 class Solution {
 public:
     string makeGood(string s) {
-        vector<char> cs;
-        vector<bool> has(s.size(),true);
-        stack<int> valid;
-        valid.push(0);
+        stack<char> valid;
+        valid.push(s[0]);
         for(int i=1;i<s.size();i++){
-            if(!valid.empty()&&abs(int(s[i]-s[valid.top()])) == 32){
-                has[valid.top()] = false;
-                has[i] = false;
+            if(!valid.empty()&&abs(int(s[i]-valid.top())) == 32)
                 valid.pop();
-            }else
-                valid.push(i);
+            else
+                valid.push(s[i]);
         }
-        for(int i=0;i<s.size();i++)
-            if(has[i])
-                cs.push_back(s[i]);
+        vector<char> cs(valid.size());
+        int index = valid.size()-1;
+        while(index>=0)
+        {
+            cs[index--]= valid.top();valid.pop();
+        }
         return string(cs.begin(),cs.end());
     }
 };
