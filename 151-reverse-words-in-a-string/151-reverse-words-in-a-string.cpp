@@ -3,13 +3,11 @@ public:
     string reverseWords(string s) {
         reverse(s.begin(),s.end());
         int size = s.size();
-        int start= 0;
         int next = 0;
         int end = 0;
         for(int i=0;i<size;i++){
             while(i<size&&s[i]==' ')
                 i++;
-            start = i;
             while(i<size&&s[i]!=' '){
                 swap(s[end++],s[i++]);
             }
