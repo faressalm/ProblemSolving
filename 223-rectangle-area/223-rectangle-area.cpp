@@ -9,17 +9,7 @@ public:
         int area = area1+area2;
         if(bx1>=ax2||ax1>=bx2||by2<=ay1||ay2<=by1)
             return area;
-        int intersectArea;
-        if(bx1>=ax1&&ay1>=by1)
-            intersectArea = recArea(bx1,ay1,min(ax2,bx2),min(by2,ay2));
-        else if(bx1>=ax1&&ay1<by1)
-            intersectArea = recArea(bx1,by1,min(ax2,bx2),min(by2,ay2));
-        else if (bx1<ax1&&ay1>=by1)
-            intersectArea = recArea(ax1,ay1,min(ax2,bx2),min(by2,ay2));
-        else 
-            intersectArea = recArea(ax1,by1,min(ax2,bx2),min(by2,ay2));
-         return area - intersectArea;
-            
-            
+        int intersectArea = recArea(max(bx1,ax1),max(ay1,by1),min(ax2,bx2),min(by2,ay2));
+        return area - intersectArea;    
     }
 };
