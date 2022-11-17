@@ -1,6 +1,6 @@
 class Solution {
 private: int recArea(int ax1, int ay1,int ax2, int ay2){
-    return abs(ax2-ax1)*abs(ay2-ay1);
+    return (ax2-ax1)*(ay2-ay1);
 }
 public:
     int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
